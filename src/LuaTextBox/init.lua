@@ -203,7 +203,7 @@ local function UpdateAutocompleteSelection(targets: { Frame }, index: number)
 	return
 end
 
-local function FillAutocompleteSelections(acframe: Frame, targets: { AutocompleteTarget }, words: {string}, index: number)
+local function FillAutocompleteSelections(acframe: Frame, targets: { AutocompleteTarget }, words: {string}, index: number, editorinput: TextBox?)
 	--// If there are lesser words than the target then return
 	if (#words - index) < #targets - 1 then return end
 	
@@ -216,6 +216,19 @@ local function FillAutocompleteSelections(acframe: Frame, targets: { Autocomplet
 	
 	--// If there are no words then return
 	if #words == 0 then return end
+
+	--// Compute X offset for the frame size
+	local FrameXOffset do
+		FrameXOffset = 0
+		for _, word in ipairs(words) do
+			local FontSize = if editorinput then editorinput.TextSize else 16
+			local Font = if editorinput then editorinput.Font else Enum.Font.Code
+			local XBound = serv.TextService:GetTextSize(word, FontSize, Font, Vector2.new(0, math.huge)).X
+			if FrameXOffset > XBound then
+				FrameXOffset = XBound
+			end
+		end
+	end
 	
 	--// Filling the selections
 	local CurrentTargetIndex, MaxTargetIndex = 1, #targets
@@ -225,7 +238,7 @@ local function FillAutocompleteSelections(acframe: Frame, targets: { Autocomplet
 		if words[i] then
 			AutocompleteTarget.Text.Text = words[i]
 			AutocompleteTarget.Visible = true
-			acframe.Size = UDim2.new(0, 200, 0, CurrentTargetIndex * 25)
+			acframe.Size = UDim2.new(0, FrameXOffset, 0, CurrentTargetIndex * 25)
 		else
 			break
 		end
