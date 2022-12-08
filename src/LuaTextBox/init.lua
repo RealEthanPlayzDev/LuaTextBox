@@ -308,7 +308,7 @@ function LuaTextBox:DoAutocomplete(word: string, cpuaw: number)
 	local TargetSelectionIndex = 1
 	local TargetIndex = 1
 	local WordSelectionIndex = 1
-	FillAutocompleteSelections(AutocompleteFrame, AutocompleteTargets, PossibleWords, TargetIndex)
+	FillAutocompleteSelections(AutocompleteFrame, AutocompleteTargets, PossibleWords, TargetIndex, EditorInput)
 	UpdateAutocompleteSelection(AutocompleteTargets, TargetSelectionIndex)
 
 	--// Disable multiline input temporarily
@@ -350,7 +350,7 @@ function LuaTextBox:DoAutocomplete(word: string, cpuaw: number)
 
 		--// Refill and update selection as needed
 		--// print("TI:", TargetIndex, "TSI:", TargetSelectionIndex, "WSI:", WordSelectionIndex)
-		FillAutocompleteSelections(AutocompleteFrame, AutocompleteTargets, PossibleWords, TargetIndex)
+		FillAutocompleteSelections(AutocompleteFrame, AutocompleteTargets, PossibleWords, TargetIndex, EditorInput)
 		UpdateAutocompleteSelection(AutocompleteTargets, TargetSelectionIndex)
 		return
 	end))
