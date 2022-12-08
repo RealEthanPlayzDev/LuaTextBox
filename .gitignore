@@ -1,0 +1,10 @@
+# Rojo sourcemap
+sourcemap.json
+
+# Roblox Studio related files
+/*.rbxm
+/*.rbxmx
+/*.rbxl
+/*.rbxlx
+/*.rbxl.lock
+/*.rbxlx.lock
